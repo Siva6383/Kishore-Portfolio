@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kishore Portfolio</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        scroll-behavior: smooth;
+    }
+
+    header {
+        position: fixed;
+        top: 0; left: 0; width: 100%;
+        background: #333;
+        padding: 15px 20px;
+        color: #fff;
+        z-index: 1000;
+    }
+
+    nav ul {
+        margin: 0; padding: 0;
+        list-style: none;
+        display: flex;
+        gap: 15px;
+    }
+
+    nav a {
+        color: #fff;
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+    }
+
+    nav a.active {
+        background: #ff9800;
+    }
+
+    /* Mobile menu toggle */
+    #navLinks {
+        display: flex;
+    }
+    @media (max-width: 768px) {
+        #navLinks {
+            display: none;
+            flex-direction: column;
+            background: #222;
+            position: absolute;
+            top: 55px; right: 0;
+            width: 200px;
+        }
+        #navLinks.active {
+            display: flex;
+        }
+    }
+
+    section {
+        padding: 100px 20px;
+        min-height: 100vh;
+        background: #f4f4f4;
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* Fade-in effect */
+    .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Progress bars */
+    .progress-container {
+        background: #ddd;
+        border-radius: 5px;
+        overflow: hidden;
+        margin: 10px 0;
+    }
+    .progress-fill {
+        background: #2196f3;
+        height: 20px;
+        width: 0;
+        transition: width 1.2s ease-out;
+    }
+
+    /* Contact form */
+    form {
+        max-width: 400px;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    input, textarea {
+        padding: 8px;
+        font-size: 16px;
+        width: 100%;
+    }
+    button {
+        padding: 10px;
+        background: #2196f3;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #1976d2;
+    }
+
+    /* Form result message */
+    #formResult {
+        text-align: center;
+        margin-top: 10px;
+        display: none;
+        padding: 8px;
+        border-radius: 4px;
+        font-weight: bold;
+    }
+    #formResult.error {
+        background: #f44336;
+        color: white;
+    }
+    #formResult:not(.error) {
+        background: #4caf50;
+        color: white;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <nav>
+        <ul id="navLinks">
+            <li><a class="nav-link active" href="#home">Home</a></li>
+            <li><a class="nav-link" href="#skills">Skills</a></li>
+            <li><a class="nav-link" href="#about">About</a></li>
+            <li><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+        <button onclick="toggleMenu()" style="float:right; background:none; border:none; color:white;">☰</button>
+    </nav>
+</header>
+
+<section id="home">
+    <h1>Welcome to My Portfolio</h1>
+    <p>This is the home section.</p>
+</section>
+
+<section id="skills">
+    <h2>My Skills</h2>
+    <div class="progress-container">
+        <div class="progress-fill" data-width="90"></div>
+    </div>
+    <div class="progress-container">
+        <div class="progress-fill" data-width="75"></div>
+    </div>
+    <div class="progress-container">
+        <div class="progress-fill" data-width="60"></div>
+    </div>
+</section>
+
+<section id="about">
+    <h2>About Me</h2>
+    <p>This section fades in when scrolled into view.</p>
+</section>
+
+<section id="contact">
+    <h2>Contact Me</h2>
+    <form id="form">
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="email" name="email" placeholder="Your Email" required />
+        <input type="text" name="subject" placeholder="Subject" required />
+        <textarea name="message" placeholder="Message" rows="4" required></textarea>
+        <button type="submit">Send Message</button>
+    </form>
+    <div id="formResult"></div>
+</section>
+
+<script>
+/* ---- JS from earlier, slightly compressed for brevity ---- */
+function toggleMenu(){const e=document.getElementById("navLinks");e&&e.classList.toggle("active")}
+document.addEventListener("DOMContentLoaded",()=>{const e=document.getElementById("navLinks"),t=document.querySelectorAll(".nav-link"),n=document.querySelectorAll('a[href^="#"]'),o=document.querySelectorAll("section[id]"),c=document.querySelector("header"),r=c?c.offsetHeight:70;t.forEach(n=>{n.addEventListener("click",()=>{e&&e.classList.remove("active")})}),n.forEach(e=>{e.addEventListener("click",t=>{const n=e.getAttribute("href");if(!n)return;if("#"===n||""===n)return t.preventDefault(),void window.scrollTo({top:0,behavior:"smooth"});const o=document.querySelector(n);o&&(t.preventDefault(),window.scrollTo({top:o.offsetTop-r,behavior:"smooth"}),history.replaceState(null,"",n))})});function s(){if(!o.length||!t.length)return;const e=window.scrollY+r+10;let n="";o.forEach(t=>{const o=t.offsetTop,c=t.offsetHeight;e>=o&&e<o+c&&(n=t.id)}),t.forEach(e=>{e.classList.remove("active"),e.getAttribute("href")==="#"+n&&e.classList.add("active")})}let a=!1;window.addEventListener("scroll",()=>{a||(window.requestAnimationFrame(()=>{s(),a=!1}),a=!0)}),s();const l=document.querySelectorAll(".progress-fill");if(l.length){l.forEach(e=>{e.style.width||(e.style.width="0%"),e.style.transition||(e.style.transition="width 1.2s ease-out")});const e=new IntersectionObserver(e=>{e.forEach(e=>{const t=e.target,n=parseFloat(t.dataset.width)||0;e.isIntersecting?t.style.width=n+"%":"true"===t.dataset.reset&&(t.style.width="0%")})},{threshold:.5});l.forEach(t=>e.observe(t))}const i=new IntersectionObserver(e=>{e.forEach(e=>{const t=e.target;e.isIntersecting?t.classList.add("visible"):"true"===t.dataset.reset&&t.classList.remove("visible")})},{threshold:.1});document.querySelectorAll("section").forEach(e=>{e.classList.contains("fade-in")||e.classList.add("fade-in"),i.observe(e)});const d=document.getElementById("form"),u=document.getElementById("formResult"),f="YOUR_ACCESS_KEY";function m(e,t=!1){u?(u.style.display="block",u.textContent=e,u.classList.toggle("error",!!t),setTimeout(()=>{u.style.display="none"},3500)):alert(e)}d&&d.addEventListener("submit",e=>{e.preventDefault();const t=new FormData(d),n=Object.fromEntries(t);if(!n.name||!n.email||!n.message)return void m("Please fill in all required fields.",!0);if("YOUR_ACCESS_KEY"===f)return void m("Please replace ACCESS_KEY with your Web3Forms key.",!0);n.access_key=f,m("Please wait..."),fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(n)}).then(async e=>{let t={};try{t=await e.json()}catch(e){}e.ok?m(`✅ Thank you, ${n.name||"visitor"}! Your message was sent.`):m(`❌ ${t.message||"Submission failed."}`,!0)}).catch(e=>{console.error(e),m("⚠️ Something went wrong. Please try again later.",!0)}).finally(()=>d.reset())})});
+</script>
+</body>
+</html>
